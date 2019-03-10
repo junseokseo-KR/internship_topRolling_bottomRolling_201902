@@ -1,0 +1,18 @@
+@charset "utf-8"; 
+@import url("http://fonts.googleapis.com/earlyaccess/nanumbrushscript.css"); 
+@import url("http://fonts.googleapis.com/earlyaccess/nanumgothic.css"); 
+@import url("http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css"); 
+@import url("http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css"); 
+@import url("http://fonts.googleapis.com/earlyaccess/nanumpenscript.css"); 
+@import url("https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css"); 
+
+
+@font-face { 
+	font-family:"NanumGothic"; 
+	font-weight: normal; 
+	font-style: normal; 
+	src:url("../images/font/NanumGothic.eot"); 
+	src:url("../images/font/NanumGothic.eot?#iefix") format("embedded-opentype"),
+		url("../images/font/NanumGothic.woff") format("woff"),
+		url("../images/font/NanumGothic.ttf") format("truetype"); 
+}

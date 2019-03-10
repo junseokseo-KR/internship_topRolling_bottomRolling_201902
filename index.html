@@ -1,0 +1,573 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="author" content="엔이에스"/>
+	<meta name="description" content="엔이에스 공식 홈페이지입니다."/>
+	<meta name="keywords" content="엔이에스"/>
+	<meta name="copyright" content="엔이에스"/>
+	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="엔이에스">
+	<meta property="og:description" content="엔이에스의 공식 홈페이지입니다.">
+	<title>엔이에스</title>
+	<script src="./js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			// 상단 배너 롤링
+			var pc_rol = $("#visual_w > .visual_w_pc > ul"); //PC버전 div
+			var pc_item = $("#visual_w > .visual_w_pc > ul > li"); //PC버전 item
+			var tm_rol = $("#visual_w > .visual_w_tm > ul"); //TM버전 div
+			var tm_item = $("#visual_w > .visual_w_tm > ul > li"); //TM버전 item
+			var top_moveTime = 2000; //배너 작동시간(밀리초)
+			var topBanner_len = pc_item.length;	//상단 배너 개수
+			var top_rollingId;	//자동배너 ID
+			top_rollingId = setInterval(function(){top_rollingStart();},4000);	//자동배너 4초
+			function top_rollingStart() {
+				pc_rol.animate({left:"-="+pc_item.width()},top_moveTime,function(){
+					pc_rol.css({"left":0});
+					pc_rol.append( pc_rol.children("li").eq(0) );
+				});
+
+				tm_rol.animate({left:"-="+tm_item.width()},top_moveTime,function(){
+					tm_rol.css({"left":0});
+					tm_rol.append(tm_rol.children("li").eq(0) );
+				});
+			}
+			
+			//하단 배너 롤링
+			var $bottom_page = 1;		//하단 페이지 수
+			var bottom_rollingId;		//자동 배너 롤링 ID
+			var left_val = "-100%";		//초기 위치 값
+			var left_move = "-=100%";;	//왼쪽 이동 수치
+			var right_move = "+=100%";;	//오른쪽 이동 수치
+			var bottom_moveTime = 1000;	//하단 배너 작동 시간(밀리초)
+			var bottom_rol = $('div.bottom_rolling_wrap');	//하단 배너 wrap
+			var bottomBanner_len = $('div.bottom_rolling_wrap > li').length;	//하단 배너 개수
+			var index = 1; //버튼 개수 변수
+			var intervalTime = 4000;
+			
+			// 자동 롤링 초기
+			bottom_rollingId = setInterval(function(){bottom_rollingStart();},intervalTime);
+			// 자동 롤링 시작
+			function startInterval(){
+				bottom_rollingId = setInterval(function(){bottom_rollingStart();},intervalTime);
+			}
+			// 자동 롤링 중단
+			function stopInterval(){
+				clearInterval(bottom_rollingId);
+			}
+			
+			//우측버튼
+			$('.btn02 > a > button').click(function(){
+				bottom_rol.animate({left:left_move},bottom_moveTime,function(){
+					bottom_rol.css({"left":left_val});
+					bottom_rol.append( bottom_rol.children("li").eq(0) );
+				});
+				$bottom_page++;
+				if($bottom_page > bottomBanner_len){	//최대 이동 초과시
+					$bottom_page = 1;	//페이지 수 초기화
+				}
+			});
+			// 좌측버튼
+			$('.btn01 > a > button').click(function(){
+				bottom_rol.animate({left:right_move},bottom_moveTime,function(){
+					bottom_rol.css({"left":left_val});
+					bottom_rol.prepend( bottom_rol.children("li").eq(bottomBanner_len-1) );
+				});
+				$bottom_page--;
+				if($bottom_page < 1){	//최소 이동시
+					$bottom_page = bottomBanner_len;	//페이지 수 최대화
+				}
+				
+			});
+			//버튼 공통 함수
+			$('.btn_control').click(function(){
+				btnRolling();
+				//자동 롤링 재시작
+				stopInterval();
+				startInterval();
+			});
+			
+			//자동 롤링 함수
+			function bottom_rollingStart() {
+				bottom_rol.animate({left:left_move},bottom_moveTime,function(){
+					$(this).css({"left":left_val});
+					bottom_rol.append( bottom_rol.children("li").eq(0) );
+				});
+				$bottom_page++;
+				if($bottom_page > bottomBanner_len){	//최대 이동 초과시
+					$bottom_page = 1;	//페이지 수 초기화
+				}
+				btnRolling();
+			}
+
+			//배너 순서 표시(하단)
+			function btnRolling(){
+				var btn_img = $('.btn_w > span > a > img');
+				//페이지 외의 span off
+				btn_img.not('span.btn_'+$bottom_page).attr("src","images/main/con03_off.png");
+				//페이지 span on
+				$('.btn_'+$bottom_page+' > a > img').attr("src","images/main/con03_on.png");
+			}
+
+			//버튼 순서대로 클래스 추가
+			function btnAddClass(){
+				$(".btn_w span").each(function(){
+					$(this).addClass('btn_' + index);
+					index++;
+				})
+			}
+			btnAddClass();
+		}); 
+	</script>
+</head>
+
+<body>
+<div id="m_allWrap">
+	<ul class="skip_navi_w">
+		<li class="skip_navi"><a href="#menu_wrap" class="skip_nv">주메뉴 바로가기</a></li>
+		<li class="skip_navi"><a href="#m_con_w" class="skip_nv">본문바로가기</a></li>
+	</ul>
+
+	<header>
+		<div id="head_w">
+			<div id="head">
+				<ul class="head_top">
+					<li><a href="#"><img src="images/layout/tb01.png" alt="검색"></a></li>
+					<li><a href="#">Login</a></li>
+					<li><a href="#">Join</a></li>
+				</ul>
+				<h1><a href="#"><span class="hiddenTxt"></span></a></h1>
+=
+				<!-- PC 메뉴 -->
+				<div id="menu_wrap">
+					<h2 class="hiddenTxt">주메뉴</h2>
+					<ul class="gnb">
+						<li><a href="#">회사소개</a></li>
+						<li><a href="#">스마트팩토리</a></li>
+						<li><a href="#">증강현실시설물관리</a></li>
+						<li><a href="#">상수도시설물관리</a></li>
+						<li><a href="#">생활모니터링시스템</a></li>
+						<li><a href="#">고객지원</a></li>
+						<li><a href="#">견적문의</a></li>
+					</ul>
+				</div>
+				<!--// PC 메뉴 //-->
+			</div>
+
+			<!-- 전체메뉴 -->
+			<div class="all_menu_w" style=" display: none ;">
+				<div class="all_ml">
+					<p class="tit">NES Solution</p>
+					<p class="txt">스마트팩토리를 통한<br>제조공장의 경쟁력 제고!</p>
+					<p class="btn"><a href="#">견적문의 바로가기!</a></p>
+				</div>
+				<ul>
+					<li class="m01">
+						<ul>
+							<li><a href="#">인사말</a></li>
+							<li><a href="#">회사개요</a></li>
+							<li><a href="#">회사연혁</a></li>
+							<li><a href="#">인증현황</a></li>
+							<li><a href="#">파트너</a></li>
+							<li><a href="#">오시는길</a></li>
+						</ul>
+					</li>
+					<li class="m02">
+						<ul>
+							<li><a href="#">스마트팩토리</a></li>
+							<li><a href="#">스마트공장지원사업</a></li>
+						</ul>
+					</li>
+					<li class="m03">
+						<ul>
+							<li><a href="#">증강현실시설물관리</a></li>
+						</ul>
+					</li>
+					<li class="m03">
+						<ul>
+							<li><a href="#">상수도시설물관리</a></li>
+						</ul>
+					</li>
+					<li class="m03">
+						<ul>
+							<li><a href="#">생활모니터링시스템</a></li>
+						</ul>
+					</li>
+					<li class="m01">
+						<ul>
+							<li><a href="#">공지사항</a></li>
+							<li><a href="#">고객자료실</a></li>
+							<li><a href="#">온라인문의</a></li>
+							<li><a href="#">보도자료</a></li>
+							<li><a href="#">홍보영상</a></li>
+						</ul>
+					</li>
+					<li class="m01">
+						<ul>
+							<li><a href="#">견적문의</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<!-- // 전체메뉴 //-->
+
+
+			<!-- TM 메뉴 -->
+			<button class="tm_menu_btn" type="button">메뉴 열기</button>
+			<div class="tm_menu" style="display: none ;">
+				<h2 class="hiddenTxt">주메뉴</h2>
+				<ul>
+					<li><a href="#">회사소개</a>
+						<ul>
+							<li><a href="#">인사말</a></li>
+							<li><a href="#">회사개요</a></li>
+							<li><a href="#">회사연혁</a></li>
+							<li><a href="#">인증현황</a></li>
+							<li><a href="#">파트너</a></li>
+							<li><a href="#">오시는길</a></li>
+						</ul>
+					</li>
+					<li><a href="#">스마트팩토리</a>
+						<ul>
+							<li><a href="#">스마트팩토리</a></li>
+							<li><a href="#">스마트공장지원사업</a></li>
+						</ul>
+					</li>
+					<li><a href="#">증강현실시설물관리</a></li>
+					<li><a href="#">상수도시설물관리</a></li>
+					<li><a href="#">생활모니터링시스템</a>	</li>
+					<li><a href="#">고객지원</a>
+						<ul>
+							<li><a href="#">공지사항</a></li>
+							<li><a href="#">고객자료실</a></li>
+							<li><a href="#">온라인문의</a></li>
+							<li><a href="#">보도자료</a></li>
+							<li><a href="#">홍보영상</a></li>
+						</ul>
+					</li>
+					<li><a href="#">견적문의</a></li>
+				</ul>
+				<div class="tm_close"><a href="#">닫기</a></div>
+			</div>
+			<!-- //TM 메뉴//-->
+		</div>
+	</header>
+
+	<section>
+		<div id="m_con_w">
+			<h2 class="hiddenTxt">메인 페이지</h2>
+			<article>
+				<!-- 비주얼 -->
+				<div id="visual_w">
+					<h2 class="hiddenTxt">비주얼 이미지</h2>
+					<!-- PC -->
+					<div class="visual_w_pc">
+						<ul class="banner_wrap_pc">
+							<li class="visual01">
+								<h3><span class="txt01"><b>첫 번째 공존</b>하는 따뜻한 세상!</span><br><span class="txt02"></span></h3>
+								<div class="circle_w">
+									<div class="c01">
+										<div class="icon"><img src="./images/main/v01_i01.png" alt="이미지"></div>
+										<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+									</div>
+									<div class="c02">
+										<div class="icon"><img src="./images/main/v01_i02.png" alt="이미지"></div>
+										<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+									</div>
+									<div class="c03">
+										<div class="icon"><img src="./images/main/v01_i03.png" alt="이미지"></div>
+										<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+									</div>
+									<div class="c04">
+										<div class="icon"><img src="./images/main/v01_i04.png" alt="이미지"></div>
+										<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+									</div>
+									<div class="c05">
+										<div class="icon"><img src="./images/main/v01_i05.png" alt="이미지"></div>
+										<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+									</div>
+									<div class="c06">
+										<div class="icon"><img src="./images/main/v01_i06.png" alt="이미지"></div>
+										<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+									</div>
+								</div>
+							</li>
+							<li class="visual02">
+								<h3><span class="txt01"><b>두 번째 공존</b>하는 따뜻한 세상!</span><br><span class="txt02"></span></h3>
+								<div class="circle_w">
+									<div class="c01">
+										<div class="icon"><img src="./images/main/v01_i01.png" alt="이미지"></div>
+										<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+									</div>
+									<div class="c02">
+										<div class="icon"><img src="./images/main/v01_i02.png" alt="이미지"></div>
+										<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+									</div>
+									<div class="c06">
+										<div class="icon"><img src="./images/main/v01_i06.png" alt="이미지"></div>
+										<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+									</div>
+								</div>
+							</li>
+							<li class="visual03">
+								<h3><span class="txt01"><b>세 번째 공존</b>하는 따뜻한 세상!</span><br><span class="txt02"></span></h3>
+								<div class="circle_w">
+									<div class="c03">
+										<div class="icon"><img src="./images/main/v01_i03.png" alt="이미지"></div>
+										<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+									</div>
+									<div class="c04">
+										<div class="icon"><img src="./images/main/v01_i04.png" alt="이미지"></div>
+										<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+									</div>
+									<div class="c05">
+										<div class="icon"><img src="./images/main/v01_i05.png" alt="이미지"></div>
+										<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>	
+
+					<!-- TM -->
+					<div class="visual_w_tm">
+						<ul class="banner_wrap_tm">
+							<li class="visual01">
+								<h3><span class="txt01"><b>첫 번째 공존</b>하는 따뜻한 세상!</span><br><span class="txt02"></span></h3>
+								<div class="visual_tm">
+									<img src="images/main/tm_visual01.png" alt="비주얼 이미지">
+									<div class="circle_w">
+										<div class="c01">
+											<div class="icon"><img src="./images/main/v01_i01.png" alt="이미지"></div>
+											<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+										</div>
+
+										<div class="c02">
+											<div class="icon"><img src="./images/main/v01_i02.png" alt="이미지"></div>
+											<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+										</div>
+
+										<div class="c03">
+											<div class="icon"><img src="./images/main/v01_i03.png" alt="이미지"></div>
+											<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+										</div>
+
+										<div class="c04">
+											<div class="icon"><img src="./images/main/v01_i04.png" alt="이미지"></div>
+											<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+										</div>
+
+										<div class="c05">
+											<div class="icon"><img src="./images/main/v01_i05.png" alt="이미지"></div>
+											<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+										</div>
+
+										<div class="c06">
+											<div class="icon"><img src="./images/main/v01_i06.png" alt="이미지"></div>
+											<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="visual02">
+								<h3><span class="txt01"><b>두 번째 공존</b>하는 따뜻한 세상!</span><br><span class="txt02"></span></h3>
+								<div class="visual_tm">
+									<img src="images/main/tm_visual01.png" alt="비주얼 이미지">
+									<div class="circle_w">
+										<div class="c01">
+											<div class="icon"><img src="./images/main/v01_i01.png" alt="이미지"></div>
+											<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+										</div>
+										<div class="c02">
+											<div class="icon"><img src="./images/main/v01_i02.png" alt="이미지"></div>
+											<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+										</div>
+										<div class="c06">
+											<div class="icon"><img src="./images/main/v01_i06.png" alt="이미지"></div>
+											<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="visual03">
+								<h3><span class="txt01"><b>세 번째 공존</b>하는 따뜻한 세상!</span><br><span class="txt02"></span></h3>
+								<div class="visual_tm">
+									<img src="images/main/tm_visual01.png" alt="비주얼 이미지">
+									<div class="circle_w">
+										<div class="c03">
+											<div class="icon"><img src="./images/main/v01_i01.png" alt="이미지"></div>
+											<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+										</div>
+										<div class="c04">
+											<div class="icon"><img src="./images/main/v01_i02.png" alt="이미지"></div>
+											<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+										</div>
+										<div class="c05">
+											<div class="icon"><img src="./images/main/v01_i06.png" alt="이미지"></div>
+											<div class="circle"><div class="circle_one"></div><div class="circle_two"></div><div class="circle_three"></div></div>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</article>
+
+			<article>
+				<h2 class="hiddenTxt">메인 컨텐츠</h2>
+				<div class="con_w">
+					<div class="con01_w">
+						<ul>
+							<li><span class="txt">스마트팩토리</span><p class="img"><a href="#"><div style="width:410px;height:250px;background-color: #597df3;"></div></a></p></li>
+							<li><span class="txt">스마트팩토리</span><p class="img"><a href="#"><div style="width:410px;height:250px;background-color: #6b8bf7;"></div></a></p></li>
+							<li><span class="txt">스마트팩토리</span><p class="img"><a href="#"><div style="width:410px;height:250px;background-color: #87a2fa;"></div></a></p></li>
+							<li><span class="txt">스마트팩토리</span><p class="img"><a href="#"><div style="width:410px;height:250px;background-color: #9bb0f8;"></div></a></p></li>
+						</ul>
+					</div>
+
+					<div class="con02_w">
+						<div class="mc01">
+							<p class="tit"><a href="#">견적문의</a></p>
+							<p class="txt"><a href="#">견적문의 게시판을 통해 궁금하신 점이나 상담을 받아보실 수 있습니다.</a></p>
+							<p class="btn"><a href="#">견적문의 바로가기</a></p>
+						</div>
+
+						<div class="mc02">
+							<p class="tit">공지사항</p>
+							<ul>
+								<li><a href="#">게시글[1]</a><span>2018-10-10</span></li>
+								<li><a href="#">게시글[2]</a><span>2018-09-21</span></li>
+								<li><a href="#">게시글[3]</a><span>2018-09-05</span></li>
+								<li><a href="#">게시글[4]</a><span>2018-08-12</span></li>
+								<li><a href="#">게시글[5]</a><span>2018-08-10</span></li>
+							</ul>
+							<p class="more"><a href="#"><span class="txt">View more</span><img src="images/main/ms02_more.png" alt="더보기" class="ml-15 v-a-m"></a></p>
+						</div>
+
+						<div class="mc03">
+							<p class="tit"><a href="#">홍보영상</a></p>
+							<p class="btn"><a href="#"><img src="images/main/mc03_btn.png" alt="더보기"></a></p>
+						</div>
+					</div>
+
+					<div class="con03_w">
+						<p class="tit">제목<br><span class="t01">부제목 및 설명</span></p>
+
+						<p class="btn01 btn_control"><a href="javascript:;"><button><img src="images/main/con03_btn01.png" alt="이전"></button></a></p>
+						<ul class="list">
+							<div class="bottom_rolling_wrap">
+								<li>
+									<div class="txt_w">
+										<p class="t_tit">Github 홈페이지 4</p>
+										<ul class="t_txt">
+											<li>Launching : 2018.06.01</li>
+											<li>Lead time : 8 weeks</li>
+										</ul>
+										<ul class="t_btn">
+											<li><a href="#"><img src="images/main/con03_icon01.png" alt="홈페이지 바로가기"></a></li>
+											<li><a href="#"><img src="images/main/con03_icon02.png" alt="크게보지"></a></li>
+											<li class="txt">반응형</li>
+										</ul>
+										<p class="no"><span class="on">01</span> / 12</p>
+									</div>
+									<p class="img">
+										<a href="#"><img src="images/main/con03_li01.png" alt=""></a>
+									</p>
+								</li>
+								<li>
+									<div class="txt_w">
+										<p class="t_tit">Github 홈페이지 1</p>
+										<ul class="t_txt">
+											<li>Launching : 2018.06.01</li>
+											<li>Lead time : 8 weeks</li>
+										</ul>
+										<ul class="t_btn">
+											<li><a href="#"><img src="images/main/con03_icon01.png" alt="홈페이지 바로가기"></a></li>
+											<li><a href="#"><img src="images/main/con03_icon02.png" alt="크게보지"></a></li>
+											<li class="txt">반응형</li>
+										</ul>
+										<p class="no"><span class="on">01</span> / 12</p>
+									</div>
+									<p class="img">
+										<a href="#"><img src="images/main/con03_li01.png" alt=""></a>
+									</p>
+								</li>
+								<li>
+									<div class="txt_w">
+										<p class="t_tit">Github 홈페이지 2</p>
+										<ul class="t_txt">
+											<li>Launching : 2018.06.01</li>
+											<li>Lead time : 8 weeks</li>
+										</ul>
+										<ul class="t_btn">
+											<li><a href="#"><img src="images/main/con03_icon01.png" alt="홈페이지 바로가기"></a></li>
+											<li><a href="#"><img src="images/main/con03_icon02.png" alt="크게보지"></a></li>
+											<li class="txt">반응형</li>
+										</ul>
+										<p class="no"><span class="on">01</span> / 12</p>
+									</div>
+									<p class="img">
+										<a href="#"><img src="images/main/con03_li01.png" alt=""></a>
+									</p>
+								</li>
+								<li>
+									<div class="txt_w">
+										<p class="t_tit">Github 홈페이지 3</p>
+										<ul class="t_txt">
+											<li>Launching : 2018.06.01</li>
+											<li>Lead time : 8 weeks</li>
+										</ul>
+										<ul class="t_btn">
+											<li><a href="#"><img src="images/main/con03_icon01.png" alt="홈페이지 바로가기"></a></li>
+											<li><a href="#"><img src="images/main/con03_icon02.png" alt="크게보지"></a></li>
+											<li class="txt">반응형</li>
+										</ul>
+										<p class="no"><span class="on">01</span> / 12</p>
+									</div>
+									<p class="img">
+										<a href="#"><img src="images/main/con03_li01.png" alt=""></a>
+									</p>
+								</li>
+							</div>	
+						</ul>
+						<p class="btn02 btn_control"><a href="javascript:;"><button><img src="images/main/con03_btn02.png" alt="다음"></button></a></p>
+
+						<div class="btn_w">
+							<span class="btn_off"><a href="#"><img src="images/main/con03_on.png" alt="on"></a></span>
+							<span class="btn_on"><a href="#"><img src="images/main/con03_off.png" alt="off"></a></span>
+							<span class="btn_on"><a href="#"><img src="images/main/con03_off.png" alt="off"></a></span>
+							<span class="btn_on"><a href="#"><img src="images/main/con03_off.png" alt="off"></a></span>
+						</div>
+					</div>
+				</div>
+			</article>
+		</div>
+	</section>
+
+	<footer>
+		<div id="footer_w">
+			<h2 class="hiddenTxt">카피라이트</h2>
+			<div class="f_menu_w">
+				<ul class="f_menu">
+					<li><a href="#">공지사항</a></li>
+					<li><a href="#">고객자료실</a></li>
+					<li><a href="#">온라인문의</a></li>
+					<li><a href="#">보도자료</a></li>
+					<li><a href="#">홍보영상</a></li>
+					<li class="none"><a href="#">견적문의</a></li>
+				</ul>
+				<p class="logo">하단로고</p>
+			</div>
+			<div class="copy_w">
+				<p class="copy">[12345] 충청북도 청주시 청원구 주중동&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEL. 010.4401.3450&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FAX. 010.4401.3450<br><span class="copyright">Copyright(C) 2019 JUNSEOK .CO.,LTD. All Rights Reserved.</span></p>
+			</div>
+		</div>
+	</footer>
+</div>
+</body>
+</html>
